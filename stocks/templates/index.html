@@ -1,0 +1,85 @@
+<html>
+  <head>
+    <title>My Zerodha Task</title>
+    <style>
+      .block {
+        display: block;
+        width: 100%;
+        border: none;
+        background-color: #4CAF50;
+        color: white;
+        padding: 5px;
+        font-size: 14px;
+        font-style: inherit;
+        cursor: pointer;
+        text-align: center;
+      }
+      
+      .block:hover {
+        background-color: #ddd;
+        color: black;
+      }
+
+      .footer {
+        position: fixed;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        text-align: center;
+      }
+      </style>
+  </head>
+  <body>
+    <link href="https://unpkg.com/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/bootstrap-vue@2.15.0/dist/bootstrap-vue.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.js"></script>
+    <script src="https://unpkg.com/bootstrap-vue@2.15.0/dist/bootstrap-vue.js"></script>
+    <br><br>
+    <h1 style="text-align:center;">My Zerodha Careers Task</h1>
+    <br><br><br>
+    <div class="active-pink-3 active-pink-4 mb-3">
+      <input class="form-control" type="text" placeholder="Enter Stock Name" aria-label="Search" id="mystock"/>
+    </div>
+    <button onclick="display()" class="block">Search</button>
+    <br><br><br>
+    {% if name %}
+    <div id="app">
+      <b-table outlined stacked :items="items"></b-table>
+    </div>
+    <br>
+    <button onclick="download_csv()" class="block">Download CSV</button>
+    {% endif %}
+    <br><br><br>
+    <div class="footer"><h5>Author : Surya Srikar Peruri</h5></div>
+  </body>
+  <script>
+    var dict = { 'name':'{{name}}', 'code':'{{code}}', 'open':'{{open}}', 'high':'{{high}}', 'low':'{{low}}', 'close':'{{close}}' };
+    var items = [];
+    if(dict['name'] != ''){
+      items.push(dict);
+    }
+    new Vue({
+      el: '#app',
+      data() {
+        return {
+          items: items,
+          fields: ['name', 'code', 'open', 'high', 'low', 'close']
+        }
+      }
+    })
+
+    function download_csv() {
+      var csv = 'name,'+dict['name']+'\ncode,'+dict['code']+'\nopen,'+dict['open']+'\nhigh,'+dict['high']+'\nlow,'+dict['low']+'\nclose,'+dict['close'];
+      console.log(csv);
+      var hiddenElement = document.createElement('a');
+      hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(csv);
+      hiddenElement.target = '_blank';
+      hiddenElement.download = dict['name'] + '.csv';
+      hiddenElement.click();
+    }
+
+    function display() {
+      window.location.href = 'http://127.0.0.1:8000/stocks/search/' + document.getElementById("mystock").value;
+    }
+  </script>
+</html>
