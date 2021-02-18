@@ -46,7 +46,6 @@ def index(request):
 
 def download(request):
     today_date = datetime.date.today().strftime("%d-%m-%Y")
-    today_date = '17-02-2021'
     download_and_extract(today_date)
     parse_and_save_in_redis(today_date)
     return HttpResponse('Downloading Done!!\n')

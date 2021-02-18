@@ -48,6 +48,8 @@
     </div>
     <br>
     <button onclick="download_csv()" class="block">Download CSV</button>
+    {% else %}
+    <h5>{{ name }} stock does not exist in the database</h5>
     {% endif %}
     <br><br><br>
     <div class="footer"><h5>Author : Surya Srikar Peruri</h5></div>
