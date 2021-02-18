@@ -36,10 +36,10 @@ def search_stock_name(name):
     if answer != {}:
         result = {'code':answer[b'code'].decode('ascii'), 'open':answer[b'open'].decode('ascii'),
                 'high':answer[b'high'].decode('ascii'), 'low':answer[b'low'].decode('ascii'),
-                'name':name, 'close':answer[b'close'].decode('ascii')}
+                'name':name, 'close':answer[b'close'].decode('ascii'), 'result':'true'}
         return result
     else:
-        return {}
+        return {'name':name}
 
 def index(request):
     return render(request, 'index.html', context = {})
